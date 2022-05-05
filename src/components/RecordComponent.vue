@@ -8,8 +8,8 @@
           :alt="record.title"
         />
       </div>
-      <div class="card-body">
-        <h4 class="card-title">{{ record.title }}</h4>
+      <div class="card-body p-0 pt-3">
+        <h4 class="card-title text-uppercase fw-bold">{{ record.title }}</h4>
         <div class="card-text">
           <div class="author">{{ record.author }}</div>
           <div class="year">{{ record.year }}</div>
