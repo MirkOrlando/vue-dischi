@@ -1,5 +1,5 @@
 <template>
-  <header class="pt-2 pb-2">
+  <header class="pt-2 pb-3">
     <div class="logo">
       <img src="@/assets/img/spotify-logo.png" alt="" />
     </div>
@@ -16,7 +16,10 @@ export default {
 header {
   background-color: $litePrimaryColor;
   .logo {
-    width: 50px;
+    width: 80px;
+    img {
+      vertical-align: unset;
+    }
   }
 }
 </style>
