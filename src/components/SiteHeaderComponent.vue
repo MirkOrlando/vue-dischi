@@ -1,9 +1,22 @@
 <template>
-  <header>Site Header Here</header>
+  <header class="pt-2 pb-2">
+    <div class="logo">
+      <img src="@/assets/img/spotify-logo.png" alt="" />
+    </div>
+  </header>
 </template>
 
 <script>
+export default {
+  name: "SiteHeaderComponent",
+};
 </script>
 
 <style scoped lang="scss">
+header {
+  background-color: $litePrimaryColor;
+  .logo {
+    width: 50px;
+  }
+}
 </style>
