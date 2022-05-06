@@ -1,7 +1,7 @@
 <template>
   <header class="pt-2 pb-3">
     <div class="logo">
-      <img src="@/assets/img/spotify-logo.png" alt="" />
+      <img class="img-fluid" src="@/assets/img/spotify-logo.png" alt="" />
     </div>
   </header>
 </template>

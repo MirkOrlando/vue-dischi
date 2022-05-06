@@ -1,6 +1,12 @@
 <template>
-  <div class="container">
-    <div class="row row-cols-5 g-3 py-4" v-if="!loading">
+  <div class="container py-4">
+    <div class="action-filter d-flex justify-content-end">
+      <select class="form-select my-4" aria-label="Default select example">
+        <option selected>Select a Genre</option>
+        <Genre :genre="genre" v-for="(genre, index) in genres" :key="index" />
+      </select>
+    </div>
+    <div class="row row-cols-5 g-3" v-if="!loading">
       <Record
         :record="record"
         v-for="(record, index) in records"
@@ -12,15 +18,17 @@
 </template>
 
 <script>
+import axios from "axios";
 import Record from "@/components/RecordComponent.vue";
 import Loading from "@/components/LoadingComponent.vue";
-import axios from "axios";
+import Genre from "@/components/GenreComponent.vue";
 
 export default {
   name: "RecordsListComponent",
   components: {
     Record,
     Loading,
+    Genre,
   },
   data() {
     return {
@@ -28,6 +36,8 @@ export default {
       records: null,
       loading: true,
       error: null,
+      genres: null,
+      selectedGenre: null,
     };
   },
   methods: {
@@ -38,18 +48,36 @@ export default {
           //console.log(this, response);
           this.records = response.data.response;
           this.loading = !response.data.success;
+          this.getGenres();
         })
         .catch((error) => {
           console.log(error);
           this.error = error;
         });
     },
+    getGenres() {
+      this.genres = [];
+      this.records.forEach((record) => {
+        if (!this.genres.includes(record.genre)) {
+          this.genres.push(record.genre);
+        }
+      });
+      //console.log(this.genre);
+    },
   },
   mounted() {
     this.call_API();
   },
+  computed: {},
 };
 </script>
 
 <style lang="scss" scoped>
+.form-select {
+  width: unset;
+  background-color: $litePrimaryColor;
+  background-image: unset;
+  color: $liteDarkColor;
+  border-color: $liteDarkColor;
+}
 </style>
