@@ -1,9 +1,18 @@
 <template>
   <div class="container py-4">
     <div class="action-filter d-flex justify-content-end">
-      <select class="form-select my-4" aria-label="Default select example">
+      <select
+        class="form-select my-4"
+        aria-label="Default select example"
+        v-model="selectedGenre"
+      >
         <option selected>Select a Genre</option>
-        <Genre :genre="genre" v-for="(genre, index) in genres" :key="index" />
+        <Genre
+          :genre="genre"
+          v-for="(genre, index) in genres"
+          :key="index"
+          @selectGenre="catchGenreSelected"
+        />
       </select>
     </div>
     <div class="row row-cols-5 g-3" v-if="!loading">
@@ -37,7 +46,7 @@ export default {
       loading: true,
       error: null,
       genres: null,
-      selectedGenre: null,
+      selectedGenre: "",
     };
   },
   methods: {
@@ -48,14 +57,14 @@ export default {
           //console.log(this, response);
           this.records = response.data.response;
           this.loading = !response.data.success;
-          this.getGenres();
+          this.getGenreslist();
         })
         .catch((error) => {
           console.log(error);
           this.error = error;
         });
     },
-    getGenres() {
+    getGenreslist() {
       this.genres = [];
       this.records.forEach((record) => {
         if (!this.genres.includes(record.genre)) {
@@ -64,11 +73,22 @@ export default {
       });
       //console.log(this.genre);
     },
+    catchGenreSelected() {
+      console.log("Seleziona Genere", this.selectedGenre);
+    },
   },
   mounted() {
     this.call_API();
   },
-  computed: {},
+  /*   computed: {
+     filterRecordsByGenre() {
+      return this.records.filter((record) => {
+        //console.log(record);
+        return record.genre === this.selectedGenre;
+      }); 
+    },
+  },
+ */
 };
 </script>
 

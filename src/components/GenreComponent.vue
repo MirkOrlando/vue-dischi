@@ -1,16 +1,12 @@
 <template>
-  <option
-    :value="genre"
-    v-on:selected="$emit('option', $event.target.value)"
-    @click="$emit('filterGenre')"
-  >
+  <option :value="genre" v-on:imput="$emit('selectGenre', $event.target.value)">
     {{ genre }}
   </option>
 </template>
 
 <script>
 export default {
-  name: " GenreComponent",
+  name: "GenreComponent",
   props: {
     genre: String,
   },
