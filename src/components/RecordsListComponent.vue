@@ -1,24 +1,16 @@
 <template>
   <div class="container py-4">
     <div class="action-filter d-flex justify-content-end">
-      <select
-        class="form-select my-4"
-        aria-label="Default select example"
+      <SelectGenre
+        :genres="genres"
         v-model="selectedGenre"
-      >
-        <option selected>Select a Genre</option>
-        <Genre
-          :genre="genre"
-          v-for="(genre, index) in genres"
-          :key="index"
-          @selectGenre="catchGenreSelected"
-        />
-      </select>
+        @selectGenre="catchGenreSelected"
+      />
     </div>
     <div class="row row-cols-5 g-3" v-if="!loading">
       <Record
         :record="record"
-        v-for="(record, index) in records"
+        v-for="(record, index) in filterRecordsByGenre"
         :key="index"
       />
     </div>
@@ -30,14 +22,14 @@
 import axios from "axios";
 import Record from "@/components/RecordComponent.vue";
 import Loading from "@/components/LoadingComponent.vue";
-import Genre from "@/components/GenreComponent.vue";
+import SelectGenre from "@/components/SelectGenreComponent.vue";
 
 export default {
   name: "RecordsListComponent",
   components: {
     Record,
     Loading,
-    Genre,
+    SelectGenre,
   },
   data() {
     return {
@@ -74,21 +66,22 @@ export default {
       //console.log(this.genre);
     },
     catchGenreSelected() {
-      console.log("Seleziona Genere", this.selectedGenre);
+      //console.log("Seleziona Genere");
+      //console.log(this);
+      //console.log(event);
+      this.selectedGenre = event.target.value;
     },
   },
   mounted() {
     this.call_API();
   },
-  /*   computed: {
-     filterRecordsByGenre() {
+  computed: {
+    filterRecordsByGenre() {
       return this.records.filter((record) => {
-        //console.log(record);
-        return record.genre === this.selectedGenre;
-      }); 
+        return record.genre.includes(this.selectedGenre);
+      });
     },
   },
- */
 };
 </script>
 
