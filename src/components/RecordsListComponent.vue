@@ -2,10 +2,13 @@
   <div class="container py-4">
     <div class="action-filter d-flex justify-content-end">
       <SelectGenre
+        class="mx-3"
         :genres="genres"
         v-model="selectedGenre"
         @selectGenre="catchGenreSelected"
+        @reset="resetGenre"
       />
+      <SelectAuthor class="mx-3" :authors="authors" v-model="selectedAuthor" />
     </div>
     <div class="row row-cols-5 g-3" v-if="!loading">
       <Record
@@ -23,6 +26,7 @@ import axios from "axios";
 import Record from "@/components/RecordComponent.vue";
 import Loading from "@/components/LoadingComponent.vue";
 import SelectGenre from "@/components/SelectGenreComponent.vue";
+import SelectAuthor from "@/components/SelectAuthorComponent.vue";
 
 export default {
   name: "RecordsListComponent",
@@ -30,6 +34,7 @@ export default {
     Record,
     Loading,
     SelectGenre,
+    SelectAuthor,
   },
   data() {
     return {
@@ -38,7 +43,9 @@ export default {
       loading: true,
       error: null,
       genres: null,
+      authors: null,
       selectedGenre: "",
+      selectedAuthor: "",
     };
   },
   methods: {
@@ -65,11 +72,27 @@ export default {
       });
       //console.log(this.genre);
     },
+    getAuthorslist() {
+      this.authors = [];
+      this.records.forEach((record) => {
+        if (!this.authors.includes(record.author)) {
+          this.authors.push(record.author);
+        }
+      });
+      //console.log(this.author);
+    },
+
     catchGenreSelected() {
       //console.log("Seleziona Genere");
       //console.log(this);
       //console.log(event);
       this.selectedGenre = event.target.value;
+    },
+    resetGenre() {
+      //console.log("Seleziona Genere");
+      //console.log(this);
+      //console.log(event);
+      this.selectedGenre = "";
     },
   },
   mounted() {
@@ -86,11 +109,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form-select {
-  width: unset;
-  background-color: $litePrimaryColor;
-  background-image: unset;
-  color: $liteDarkColor;
-  border-color: $liteDarkColor;
-}
 </style>

@@ -8,9 +8,9 @@
       aria-label="Default select example"
       v-on:input="$emit('selectGenre', $event.target.value)"
     >
-      <option selected disabled>Select a Genre</option>
-      <option v-for="(genre, index) in genres" :key="index" :value="genre">
-        {{ genre }}
+      <option selected disabled>Select an author</option>
+      <option v-for="(author, index) in authors" :key="index" :value="author">
+        {{ author }}
       </option>
     </select>
     <button>
@@ -23,9 +23,8 @@
 export default {
   name: "GenreComponent",
   props: {
-    genres: Array,
-    genre: String,
-    selectedGenre: String,
+    authors: Array,
+    selectedAuthor: String,
   },
 };
 </script>
